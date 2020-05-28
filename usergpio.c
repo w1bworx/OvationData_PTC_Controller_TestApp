@@ -5,9 +5,9 @@
 #include <unistd.h> 
 
 #define RGBLED_BASE_ADDRESS 	0x40000000
-#define RGBLED_BLU 		0
-#define RGBLED_GRN		4
-#define RGBLED_RED		8
+#define RGBLED_BLU 				0
+#define RGBLED_GRN				4
+#define RGBLED_RED				8
  
 #define MAP_SIZE 4096UL
 #define MAP_MASK (MAP_SIZE - 1)
