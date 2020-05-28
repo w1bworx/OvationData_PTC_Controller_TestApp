@@ -41,8 +41,8 @@ int main() {
 
 	mapped_dev_base = mapped_base + (dev_base & MAP_MASK);
 
-	*((volatile unsigned long *) (mapped_dev_base  + RGBLED_RED_OFFSET)) = 5000;
-	*((volatile unsigned long *) (mapped_dev_base  + RGBLED_BLU_OFFSET)) = 5000;
+	*((volatile unsigned long *) (mapped_dev_base  + RGBLED_RED)) = 5000;
+	*((volatile unsigned long *) (mapped_dev_base  + RGBLED_BLU)) = 5000;
 
 
 	if (munmap(mapped_base, MAP_SIZE) == -1) {
