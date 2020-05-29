@@ -16,10 +16,11 @@
 #define MAP_MASK (MAP_SIZE - 1)
 
 static int memfd = 0;
+void 	*mapped_base;
 void *mapped_dev_base;
 
 int openkmem () {	
-	void 	*mapped_base;
+	
 	off_t 	dev_base = RGBLED_BASE_ADDRESS;
 
 	memfd = open("/dev/mem", O_RDWR | O_SYNC);
