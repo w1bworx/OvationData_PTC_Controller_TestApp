@@ -22,16 +22,16 @@ static int memfd = 0;
 void 	*mapped_base;
 void *mapped_dev_base;
 
-static uid_t ruid, sysuid;
+static uid_t ruid, euid;
 
 
 void do_setuid(void) {
 	int status;
 
 	#ifdef _POSIX_SAVED_IDS
-  		status = seteuid (sysuid);
+  		status = seteuid (euid);
 	#else
-  		status = setreuid (ruid, sysuid);
+  		status = setreuid (euid, ruid);
 	#endif
 
   	if (status < 0) {
@@ -83,7 +83,7 @@ int main (int argc, char *argv[]) {
 	int r,g,b;
 
 	ruid = getuid();
-	sysuid = 0;
+	euid = 0;
 
 	do_setuid();
 
