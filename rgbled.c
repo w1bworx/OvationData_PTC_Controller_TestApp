@@ -56,20 +56,19 @@ int closekmem() {
 }
 
 
-int main(int argc, char *argv[]) {
-	int 	rc;
-	int 	r,g,b;
+int setled(int r, int g, int b) {
+	int 	res;
 
 	if (memfd == 0) {
-		rc = openkmem();
-		if (rc < 0) {
+		res = openkmem();
+		if (res < 0) {
 			exit(0);
 		}
 	}
 
-	r = atoi(argv[1]);
-	g = atoi(argv[2]);
-	b = atoi(argv[3]);
+	// r = atoi(argv[1]);
+	// g = atoi(argv[2]);
+	// b = atoi(argv[3]);
 
 	*((volatile unsigned long *) (mapped_dev_base  + RGBLED_RED)) = r;
 	*((volatile unsigned long *) (mapped_dev_base  + RGBLED_GRN)) = g;
