@@ -31,11 +31,7 @@ int openkmem () {
 }
 
 
-<<<<<<< HEAD
 int main() {
-=======
-int rgbled() {
->>>>>>> 457b18249da25bc5046fea1547ad2f2712fcd1e1
 
 	int 	rc;
 	void 	*mapped_base, *mapped_dev_base; 
