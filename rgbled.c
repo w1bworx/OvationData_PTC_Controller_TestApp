@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <unistd.h> 
@@ -18,6 +21,24 @@
 static int memfd = 0;
 void 	*mapped_base;
 void *mapped_dev_base;
+
+static uid_t ruid, sysuid;
+
+
+void do_setuid(void) {
+	int status;
+
+	#ifdef _POSIX_SAVED_IDS
+  		status = seteuid (sysuid);
+	#else
+  		status = setreuid (ruid, sysuid);
+	#endif
+
+  	if (status < 0) {
+    	fprintf (stderr, "Couldn't set uid.\n");
+    	exit (status);
+    }	
+}
 
 int openkmem () {	
 	
@@ -55,9 +76,16 @@ int closekmem() {
 	return SUCCESS;
 }
 
+// int setled(int r, int g, int b) {
+int main (int argc, char *argv[]) {
 
-int setled(int r, int g, int b) {
 	int 	res;
+	int r,g,b;
+
+	ruid = getuid();
+	sysuid = 0;
+
+	do_setuid();
 
 	if (memfd == 0) {
 		res = openkmem();
@@ -66,9 +94,9 @@ int setled(int r, int g, int b) {
 		}
 	}
 
-	// r = atoi(argv[1]);
-	// g = atoi(argv[2]);
-	// b = atoi(argv[3]);
+	r = atoi(argv[1]);
+	g = atoi(argv[2]);
+	b = atoi(argv[3]);
 
 	*((volatile unsigned long *) (mapped_dev_base  + RGBLED_RED)) = r;
 	*((volatile unsigned long *) (mapped_dev_base  + RGBLED_GRN)) = g;
