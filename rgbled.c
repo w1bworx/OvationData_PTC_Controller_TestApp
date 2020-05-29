@@ -83,9 +83,9 @@ int main (int argc, char *argv[]) {
 	int r,g,b;
 
 	ruid = getuid();
-	euid = 0;
+	setuid(0);
 
-	do_setuid();
+	//do_setuid();
 
 	if (memfd == 0) {
 		res = openkmem();
