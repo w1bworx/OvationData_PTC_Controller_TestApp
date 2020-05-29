@@ -8,23 +8,42 @@
 #define RGBLED_BLU 				0
 #define RGBLED_GRN				4
 #define RGBLED_RED				8
+
+#define SUCCESS					0
+#define FAILED					-1
  
 #define MAP_SIZE 4096UL
 #define MAP_MASK (MAP_SIZE - 1)
 
+static int memfd = 0;
+
+
+
+int openkmem () {
+	memfd = open("/dev/mem", O_RDWR | O_SYNC);
+    if (memfd == -1) {
+		printf("Can't open /dev/mem.\n");
+		return FAILED;
+	}
+	printf("/dev/mem opened.\n");
+
+	return SUCCESS;
+}
+
 
 int main() {
 
-	int 	memfd;
+	int 	rc;
 	void 	*mapped_base, *mapped_dev_base; 
 	off_t 	dev_base = RGBLED_BASE_ADDRESS; 
 
-	memfd = open("/dev/mem", O_RDWR | O_SYNC);
-    	if (memfd == -1) {
-		printf("Can't open /dev/mem.\n");
-		exit(0);
+	if (memfd == 0) {
+		rc = openkmem();
+		if (rc < 0) {
+			exit(0);
+		}
 	}
-	printf("/dev/mem opened.\n");
+
 
 	// Map one page of memory into user space such that the device is in that page, but it may not
 	// be at the start of the page
