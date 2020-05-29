@@ -58,7 +58,7 @@ int closekmem() {
 
 int main(int argc, char *argv[]) {
 	int 	rc;
-	int 	r,g,b
+	int 	r,g,b;
 
 	if (memfd == 0) {
 		rc = openkmem();
