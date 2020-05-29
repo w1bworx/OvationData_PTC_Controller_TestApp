@@ -56,8 +56,9 @@ int closekmem() {
 }
 
 
-int main() {
+int main(int argc, char *argv[]) {
 	int 	rc;
+	int 	r,g,b
 
 	if (memfd == 0) {
 		rc = openkmem();
@@ -66,8 +67,13 @@ int main() {
 		}
 	}
 
-	*((volatile unsigned long *) (mapped_dev_base  + RGBLED_RED)) = 5000;
-	*((volatile unsigned long *) (mapped_dev_base  + RGBLED_BLU)) = 9500;
+	r = atoi(argv[1]);
+	g = atoi(argv[2]);
+	b = atoi(argv[3]);
+
+	*((volatile unsigned long *) (mapped_dev_base  + RGBLED_RED)) = r;
+	*((volatile unsigned long *) (mapped_dev_base  + RGBLED_GRN)) = g;
+	*((volatile unsigned long *) (mapped_dev_base  + RGBLED_BLU)) = b;
 
 	closekmem();
 
